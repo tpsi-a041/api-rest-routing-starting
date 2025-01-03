@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-generic',
@@ -8,26 +9,27 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./generic.component.css']
 })
 export class GenericComponent {
-  catName: any;
   someInf:any;
+  apiObservable!: Observable<any>;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.params.subscribe(this.getparams);
   }
 
   getparams = (params: any,) => {
     console.log(params['cat-name']);
-    this.catName = params['cat-name'];
-    this.apiCall();
+    let catName = params['cat-name'];
+    this.apiCall(catName);
   };
 
-  //Aggiungi un tipo di dati alla chiamata http
-  apiCall = () => {
-    //Richiama la seguenete API https://emojihub.yurace.pro/api/category/:cat-name
-    const apiObservable = this.http.get(`https://emojihub.yurace.pro/api/all/category/${this.catName}`);
-    apiObservable.subscribe(
+  
+  apiCall = (catName : string) => {
+    //Richiama le API a te assegnate aggiungendo il nome della categoria passato come parametro
+    const apiUrl = `CHANGEME`;
+    this.apiObservable = this.http.get(apiUrl); //Aggiungi un tipo di dati alla chiamata http.get
+    this.apiObservable.subscribe(
       {
-        next: this.handleApiResponse,
-        error: this.handleApiError
+        next: this.handleApiResponse, //IF OK
+        error: this.handleApiError    //IF ERROR
     }
     );
   }
@@ -39,6 +41,7 @@ export class GenericComponent {
 
   handleApiError = (error: any) => {
     console.log(error);
+    //REDIRECT TO ERROR PAGE OR SHOW ERROR MESSAGE
   };
 }
 

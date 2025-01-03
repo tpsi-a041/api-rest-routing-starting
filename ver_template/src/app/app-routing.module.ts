@@ -4,8 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { GenericComponent } from './generic/generic.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'generic/:cat-name', component: GenericComponent } //Dare un nomesensato
+  //FILL HERE
 ];
 
 
